@@ -6,10 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DBConnection;
 import entity.AdItem;
+import entity.AdItem.AdItemBuilder;
 
 public class MySQLConnection implements DBConnection{
 
@@ -41,7 +43,32 @@ public class MySQLConnection implements DBConnection{
 	public List<AdItem> searchAdItems() {
 		if (conn == null) {
 			System.err.println("DB connection failed");
+			return new ArrayList<>();
 		}
+		
+		List<AdItem> adItems = new ArrayList<>();
+		
+		try {
+			// Get all ads candidates
+			String sql = "SELECT * FROM ad WHERE bid > 0";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			
+			ResultSet rs = stmt.executeQuery();
+			AdItemBuilder builder = new AdItemBuilder();
+			
+			while (rs.next()) {
+				builder.setAd_id(rs.getInt("ad_id"));
+				builder.setBid(rs.getFloat("bid"));
+				builder.setAdvertiser_id(rs.getInt("advertiser_id"));
+				builder.setImage_url(rs.getString("image_url"));
+				builder.setAd_score(rs.getFloat("ad_score"));
+				adItems.add(builder.build());
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return adItems;
 	}
 
 	@Override
