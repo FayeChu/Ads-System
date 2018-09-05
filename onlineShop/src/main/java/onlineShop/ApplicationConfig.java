@@ -7,10 +7,11 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 public class ApplicationConfig {
@@ -36,6 +37,24 @@ public class ApplicationConfig {
 
 		return dataSource;
 	}
+	
+	// Handler for multipart form data
+    @Bean
+    public MultipartResolver multipartResolver() {
+   	 CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+   	 multipartResolver.setMaxUploadSize(10240000);
+   	 return multipartResolver;
+    }
+    
+    // Properly encode URL encoding for special characters.
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+    	StrictHttpFirewall firewall = new StrictHttpFirewall();
+    	firewall.setAllowUrlEncodedSlash(true);
+    	firewall.setAllowSemicolon(true);
+    	return firewall;
+    }
+
 
 	private final Properties hibernateProperties() {
 		Properties hibernateProperties = new Properties();
