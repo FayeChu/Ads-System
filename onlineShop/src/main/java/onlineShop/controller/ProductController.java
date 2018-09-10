@@ -56,7 +56,7 @@ public class ProductController {
 		productService.addProduct(product);
 		MultipartFile image = product.getProductImage();
 		if (image != null && !image.isEmpty()) {
-			Path path = Paths.get("/Users/xfchu/sdev/projects/products/" + product.getId() + ".jpg");
+			Path path = Paths.get("/Users/xfchu/sdev/projects/Ads-System/products/" + product.getId() + ".jpg");
 			
 			try {
 				image.transferTo(new File(path.toString()));
@@ -72,7 +72,7 @@ public class ProductController {
 	
 	@RequestMapping(value = "/admin/delete/{productId}", method = RequestMethod.GET)
 	public String deleteProduct(@PathVariable(value = "productId")int productId) {
-		Path path = Paths.get("/Users/xfchu/sdev/projects/products/" + productId + ".jpg");
+		Path path = Paths.get("/Users/xfchu/sdev/projects/Ads-System/products/" + productId + ".jpg");
 		
 		if (Files.exists(path)) {
 			try {
