@@ -46,6 +46,7 @@ public class CartItemDaoImpl implements CartItemDao {
 			cartItems.remove(cartItem);
 			session.beginTransaction();
 			session.delete(cartItem);
+			session.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
