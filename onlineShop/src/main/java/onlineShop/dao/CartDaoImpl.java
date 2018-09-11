@@ -58,7 +58,7 @@ public class CartDaoImpl implements CartDao {
 		Cart cart = getCartById(cartId);
 		
 		for (CartItem item : cart.getCartItem()) {
-			total += item.getPrice() * item.getQuantity();
+			total += item.getPrice();
 		}
 		
 		return total;
