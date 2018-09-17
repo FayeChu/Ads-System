@@ -12,7 +12,7 @@
 
 	<!-- Spring - Security Purpose -->
 	<security:http auto-config="true" use-expressions="true"
-		disable-url-rewriting="false">
+	<!-- 	disable-url-rewriting="false">
 		<security:csrf disabled="true" />
 		<security:intercept-url pattern="/index/**"
 			access="permitAll" />
@@ -26,9 +26,9 @@
 			authentication-failure-url="/login?error=1"
 			default-target-url="/index" />
 		<security:logout logout-url="/logout" />
-	</security:http>
+	</security:http> -->
 
-	<security:authentication-manager>
+	<!-- <security:authentication-manager>
 		<security:authentication-provider>
 			<security:user-service>
 				<security:user name="chuxiaofei0725@gmail.com"
@@ -44,7 +44,7 @@
 				emailId, password, enabled FROM users WHERE emailId=? " />
 		</security:authentication-provider>
 
-	</security:authentication-manager>
+	</security:authentication-manager> -->
 
 	<webflow-config:flow-executor
 		id="flowExecutor" flow-registry="flowRegistry">
